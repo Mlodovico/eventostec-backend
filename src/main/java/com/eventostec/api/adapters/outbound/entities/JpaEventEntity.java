@@ -2,9 +2,22 @@ package com.eventostec.api.adapters.outbound.entities;
 
 import com.eventostec.api.domain.event.Event;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.Date;
 import java.util.UUID;
 
+@Table(name = "event")
+@Entity
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class JpaEventEntity {
 
     private UUID id;

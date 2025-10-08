@@ -7,6 +7,7 @@ import com.eventostec.api.domain.event.EventRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collector;
 
 public class EventRepositoryImpl implements EventRepository {
 
@@ -20,6 +21,9 @@ public class EventRepositoryImpl implements EventRepository {
     public Event save(Event event) {
         JpaEventEntity jpaEventEntity = new JpaEventEntity(event);
         this.jpaEventRepository.save(jpaEventEntity);
+        return new Event(jpaEventEntity.getId(), jpaEventEntity.getTitle(), jpaEventEntity.getDescription(),
+                jpaEventEntity.getImgUrl(), jpaEventEntity.getEventUrl(), jpaEventEntity.getRemote(),
+                jpaEventEntity.getDate());
     }
 
     @Override
@@ -30,11 +34,18 @@ public class EventRepositoryImpl implements EventRepository {
 
     @Override
     public List<Event> findAll() {
-        return List.of();
+        return this.jpaEventRepository.findAll()
+                .stream()
+                .map(entity -> new Event(entity.getId(), entity.getTitle(), entity.getDescription(), entity.getImgUrl(),
+                        entity.getEventUrl(), entity.getRemote(), entity.getDate()))
+                .collect(Collector.of(java.util.ArrayList::new, List::add, (left, right) -> {
+                    left.addAll(right);
+                    return left;
+                }));
     }
 
     @Override
     public void deleteById(UUID id) {
-
+        this.jpaEventRepository.deleteById(id);
     }
 }
