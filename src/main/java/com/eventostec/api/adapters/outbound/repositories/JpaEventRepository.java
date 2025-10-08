@@ -1,7 +1,6 @@
 package com.eventostec.api.adapters.outbound.repositories;
 
-import com.eventostec.api.adapters.outbound.entities.JpaEventEntitie;
-import com.eventostec.api.domain.event.Event;
+import com.eventostec.api.adapters.outbound.entities.JpaEventEntity;
 import com.eventostec.api.domain.event.EventAddressProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public interface JpaEventRepository extends JpaRepository<JpaEventEntitie, UUID> {
+public interface JpaEventRepository extends JpaRepository<JpaEventEntity, UUID> {
 
     @Query("SELECT e.id AS id, e.title AS title, e.description AS description, e.date AS date, e.imgUrl AS imgUrl, e.eventUrl AS eventUrl, e.remote AS remote, a.city AS city, a.uf AS uf " +
             "FROM Event e LEFT JOIN Address a ON e.id = a.event.id " +

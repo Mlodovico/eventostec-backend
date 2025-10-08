@@ -85,4 +85,21 @@ public class Event {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    public boolean isUpcoming() {
+        return this.date.after(new Date());
+    }
+
+    public void validate() {
+        if (this.title == null || this.title.isEmpty()) {
+            throw new IllegalArgumentException("Title cannot be null or empty");
+        }
+        if (this.date == null || this.date.before(new Date())) {
+            throw new IllegalArgumentException("Event date must be in the future");
+        }
+    }
+
+    public void markAsRemote() {
+        this.remote = true;
+    }
 }
