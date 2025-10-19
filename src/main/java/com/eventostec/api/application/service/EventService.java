@@ -5,6 +5,8 @@ import com.eventostec.api.domain.coupon.Coupon;
 import com.eventostec.api.domain.event.*;
 import com.eventostec.api.utils.mappers.EventMapper;
 import com.eventostec.api.adapters.outbound.repositories.JpaEventRepository;
+import com.eventostec.api.application.usecases.EventUseCases;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +32,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class EventService {
+public class EventService implements EventUseCases {
 
     @Value("${aws.bucket.name}")
     private String bucketName;
@@ -64,7 +66,6 @@ public class EventService {
     }
 
     public List<EventResponseDTO> getUpcomingEvents(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
         Page<EventAddressProjection> eventsPage = this.repository.findUpcomingEvents(new Date(), pageable);
         return eventsPage.map(event -> new EventResponseDTO(
                         event.getId(),
@@ -177,5 +178,4 @@ public class EventService {
             return "";
         }
     }
-
 }
