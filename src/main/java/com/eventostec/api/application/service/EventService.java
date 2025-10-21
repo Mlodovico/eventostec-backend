@@ -108,7 +108,8 @@ public class EventService implements EventUseCases {
                 couponDTOs);
     }
 
-    public void deleteEvent(UUID eventId, String adminKey){
+    @Override
+    public void deleteEvent(UUID eventId) {
         if(adminKey == null || !adminKey.equals(this.adminKey)){
             throw new IllegalArgumentException("Invalid admin key");
         }
@@ -118,7 +119,8 @@ public class EventService implements EventUseCases {
 
     }
 
-    public List<EventResponseDTO> searchEvents(String title){
+    @Override
+    public List<EventResponseDTO> searchEvents(String title) {
         title = (title != null) ? title : "";
 
         List<EventAddressProjection> eventsList = this.repository.findEventsByTitle(title);
@@ -136,6 +138,7 @@ public class EventService implements EventUseCases {
                 .toList();
     }
 
+    @Override
     public List<EventResponseDTO> getFilteredEvents(int page, int size, String city, String uf, Date startDate, Date endDate){
         city = (city != null) ? city : "";
         uf = (uf != null) ? uf : "";

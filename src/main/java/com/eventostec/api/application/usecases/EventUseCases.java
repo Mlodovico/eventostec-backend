@@ -1,6 +1,6 @@
 package com.eventostec.api.application.usecases;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
